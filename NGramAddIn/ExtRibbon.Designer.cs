@@ -1,4 +1,7 @@
-﻿namespace NGramAddIn
+﻿using Microsoft.Office.Core;
+using Microsoft.Office.Tools.Ribbon;
+
+namespace NGramAddIn
 {
     partial class ExtRibbon : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
@@ -18,7 +21,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if(disposing && (components != null))
             {
                 components.Dispose();
             }
@@ -33,14 +36,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl1 = this.Factory.CreateRibbonDropDownItem();
-            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl2 = this.Factory.CreateRibbonDropDownItem();
-            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl3 = this.Factory.CreateRibbonDropDownItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtRibbon));
             this.tabExtAddIns = this.Factory.CreateRibbonTab();
             this.grpNGram = this.Factory.CreateRibbonGroup();
-            this.cmbNumOfWords = this.Factory.CreateRibbonComboBox();
             this.btnNGram = this.Factory.CreateRibbonButton();
+            this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.twoWordTgl = this.Factory.CreateRibbonToggleButton();
+            this.threeWordTgl = this.Factory.CreateRibbonToggleButton();
             this.tabExtAddIns.SuspendLayout();
             this.grpNGram.SuspendLayout();
             this.SuspendLayout();
@@ -54,38 +56,40 @@
             // grpNGram
             // 
             this.grpNGram.Items.Add(this.btnNGram);
-            this.grpNGram.Items.Add(this.cmbNumOfWords);
-            this.grpNGram.Label = "NGram";
+            this.grpNGram.Items.Add(this.separator1);
+            this.grpNGram.Items.Add(this.twoWordTgl);
+            this.grpNGram.Items.Add(this.threeWordTgl);
+            this.grpNGram.Label = "nGram";
             this.grpNGram.Name = "grpNGram";
-            // 
-            // cmbNumOfWords
-            // 
-            ribbonDropDownItemImpl1.Label = "1";
-            ribbonDropDownItemImpl1.Tag = 1;
-            ribbonDropDownItemImpl2.Label = "2";
-            ribbonDropDownItemImpl2.Tag = 2;
-            ribbonDropDownItemImpl3.Label = "3";
-            ribbonDropDownItemImpl3.Tag = 3;
-            this.cmbNumOfWords.Items.Add(ribbonDropDownItemImpl1);
-            this.cmbNumOfWords.Items.Add(ribbonDropDownItemImpl2);
-            this.cmbNumOfWords.Items.Add(ribbonDropDownItemImpl3);
-            this.cmbNumOfWords.Label = "# of Words";
-            this.cmbNumOfWords.Name = "cmbNumOfWords";
-            this.cmbNumOfWords.ScreenTip = "The number of words that each result should contain";
-            this.cmbNumOfWords.Text = null;
-            this.cmbNumOfWords.ItemsLoading += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cmbNumOfWords_ItemsLoading);
-            this.cmbNumOfWords.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.cmbNumOfWords_TextChanged);
             // 
             // btnNGram
             // 
-            this.btnNGram.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.btnNGram.Image = ((System.Drawing.Image)(resources.GetObject("btnNGram.Image")));
             this.btnNGram.Label = "NGram";
             this.btnNGram.Name = "btnNGram";
-            this.btnNGram.ShowImage = true;
-            this.btnNGram.SuperTip = "Processes the current sheet\'s values onto a new sheet with the results of the NGr" +
+            this.btnNGram.ScreenTip = "Processes the current sheet\'s values onto a new sheet with the results of the NGr" +
     "am function";
+            this.btnNGram.ShowImage = true;
             this.btnNGram.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnNGram_Click);
+            // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            // 
+            // twoWordTgl
+            // 
+            this.twoWordTgl.Checked = true;
+            this.twoWordTgl.Label = "2-word";
+            this.twoWordTgl.Name = "twoWordTgl";
+            this.twoWordTgl.ScreenTip = "Click to turn on 2-word nGram";
+            this.twoWordTgl.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.twoWordTgl_Click);
+            // 
+            // threeWordTgl
+            // 
+            this.threeWordTgl.Label = "3-word";
+            this.threeWordTgl.Name = "threeWordTgl";
+            this.threeWordTgl.ScreenTip = "Click to turn on 3-word nGram";
+            this.threeWordTgl.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.threeWordTgl_Click);
             // 
             // ExtRibbon
             // 
@@ -105,14 +109,19 @@
         public Microsoft.Office.Tools.Ribbon.RibbonGroup grpNGram;
         public Microsoft.Office.Tools.Ribbon.RibbonTab tabExtAddIns;
         public Microsoft.Office.Tools.Ribbon.RibbonButton btnNGram;
-        public Microsoft.Office.Tools.Ribbon.RibbonComboBox cmbNumOfWords;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton threeWordTgl;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton twoWordTgl;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
     }
 
     partial class ThisRibbonCollection
     {
         internal ExtRibbon Ribbon1
         {
-            get { return this.GetRibbon<ExtRibbon>(); }
+            get
+            {
+                return this.GetRibbon<ExtRibbon>();
+            }
         }
     }
 }
